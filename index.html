@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .button {
+            border: none;
+            color: white;
+            padding: 25px 100px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .button1, .button2, .button3, .button4, .button5 {
+            background-color: white;
+            color: black;
+            width: 15%;
+            border: 2px solid #008CBA;
+            border-radius: 4px;
+        }
+
+        .button1:hover, .button2:hover, .button3:hover, .button4:hover, .button5:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+
+        .container {
+            height: 500px;
+            width: 1000px;
+            position: relative;
+            border: 3px solid #008CBA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .skills-summary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        canvas {
+            width: 350px !important;
+            height: 350px !important;
+            transition: background-color 0.3s ease;
+        }
+
+        canvas:hover {
+            background-color: rgba(46, 204, 113, 0.1); /* Light green background on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <img src="Hegarty_Maths_logo_colour.png" alt="Hegarty logo" width="15%">
+    <button class="button button1" onclick="location.href='choose-lessons.html'">Choose Lesson</button>
+    <button class="button button2" onclick="location.href='search.html'">Search</button>
+    <button class="button button3" onclick="location.href='my-tasks.html'">My Tasks</button>
+    <button class="button button4" onclick="location.href='my-scores.html'">My Scores</button>
+    <button class="button button5" onclick="location.href='profile.html'">Profile</button>
+    <h1>Hi there Farhan,</h1>
+    <h2>Here is how you have been working on Hegarty maths this year!</h2>
+    <h2>Remember to always work hard and never give up.</h2>
+
+    <div class="container">
+        <canvas id="skillChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('skillChart').getContext('2d');
+
+        // Register a plugin to draw custom text in the center of the doughnut chart
+        Chart.register({
+            id: 'centerTextPlugin',
+            beforeDraw: (chart) => {
+                if (chart.config.options.plugins.centerText) {
+                    const { text, color, fontStyle, fontSize } = chart.config.options.plugins.centerText;
+
+                    const width = chart.width;
+                    const height = chart.height;
+                    const ctx = chart.ctx;
+
+                    ctx.restore();
+                    ctx.font = `${fontStyle} ${fontSize}px Arial`;
+                    ctx.fillStyle = color;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+
+                    // Draw the text in the center of the chart
+                    ctx.fillText(text, width / 2, height / 2);
+                    ctx.save();
+                }
+            }
+        });
+
+        const chart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Skills Mastered'],
+                datasets: [{
+                    data: [925],
+                    backgroundColor: ['#2ecc71'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                cutout: '40%', // Adjust this to control the width of the ring
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: true
+                    },
+                    centerText: {
+                        text: '925 tasks', // Custom text
+                        color: '#000000', // Text color
+                        fontStyle: 'bold', // Font style
+                        fontSize: 24 // Font size (make it bigger)
+                    }
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true,
+                    onHover: (event, chartElement) => {
+                        if (chartElement.length > 0) {
+                            event.target.style.cursor = 'pointer';
+                            chart.data.datasets[0].backgroundColor = ['#27ae60']; // Darker green on hover
+                            chart.update();
+                        } else {
+                            event.target.style.cursor = 'default';
+                            chart.data.datasets[0].backgroundColor = ['#2ecc71']; // Original green
+                            chart.update();
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
