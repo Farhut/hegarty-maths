@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Expanding and Factorising - Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <!-- Navigation Buttons -->
+    <button class="back-button" onclick="location.href='algebra-lessons.html'">Back to Algebra</button>
+    <button class="home-button" onclick="location.href='index.html'">Home</button>
+
+    <h1>Expanding and Factorising</h1>
+
+    <!-- Difficulty Level Buttons -->
+    <div class="difficulty-buttons">
+        <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE High Maths Edexcel</button>
+        <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+        <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+    </div>
+
+    <!-- Questions Container -->
+    <div id="questions-container"></div>
+
+    <script>
+        const questions = {
+            gcse: [
+                { question: "Expand 2(x + 3).", answer: "2x + 6" },
+                { question: "Factorise 3x + 9.", answer: "3(x + 3)" },
+                { question: "Expand (x + 2)(x + 3).", answer: "x² + 5x + 6" },
+                { question: "Factorise x² + 5x + 6.", answer: "(x + 2)(x + 3)" },
+                { question: "Expand (2x + 1)(x - 4).", answer: "2x² - 7x - 4" }
+            ],
+            ks3: [
+                { question: "Expand 3(x + 4).", answer: "3x + 12" },
+                { question: "Factorise 4x + 8.", answer: "4(x + 2)" },
+                { question: "Expand (x + 1)(x + 5).", answer: "x² + 6x + 5" },
+                { question: "Factorise x² + 7x + 12.", answer: "(x + 3)(x + 4)" },
+                { question: "Expand (x - 2)(x + 3).", answer: "x² + x - 6" }
+            ],
+            ks2: [
+                { question: "Expand 2(x + 5).", answer: "2x + 10" },
+                { question: "Factorise 5x + 10.", answer: "5(x + 2)" },
+                { question: "Expand (x + 2)(x + 4).", answer: "x² + 6x + 8" },
+                { question: "Factorise x² + 6x + 8.", answer: "(x + 2)(x + 4)" },
+                { question: "Expand (x + 1)(x + 2).", answer: "x² + 3x + 2" }
+            ]
+        };
+
+        // Function to display questions for a selected difficulty level
+        function showQuestions(difficulty) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = ''; // Clear previous questions
+
+            questions[difficulty].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                // Add question text
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                // Add input box for answer
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                // Add feedback element
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                // Append input and feedback to the question div
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+
+                // Append the question div to the container
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Function to check the answer
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+</html>

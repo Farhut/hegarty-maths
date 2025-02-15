@@ -18,12 +18,53 @@
             color: #008CBA;
         }
 
+        .difficulty-buttons {
+            margin-bottom: 20px;
+        }
+
+        .difficulty-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .difficulty-button:hover {
+            background-color: #005f73;
+        }
+
         .question {
             margin-bottom: 20px;
             padding: 15px;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .question input {
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .question .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
         }
 
         .home-button, .back-button {
@@ -52,36 +93,104 @@
 
     <h1>Trigonometry Questions</h1>
 
-    <div class="question">
-        <p><strong>Question 1:</strong> Find the value of sin(30°).</p>
+    <!-- Difficulty Level Buttons -->
+    <div class="difficulty-buttons">
+        <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE High Maths Edexcel</button>
+        <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+        <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
     </div>
-    <div class="question">
-        <p><strong>Question 2:</strong> Calculate the value of cos(60°).</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 3:</strong> What is the value of tan(45°)?</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 4:</strong> Solve for x: sin(x) = 0.5</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 5:</strong> Find the length of the side opposite the 30° angle in a right-angled triangle with hypotenuse 10 cm.</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 6:</strong> Calculate the value of sin²(30°) + cos²(30°).</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 7:</strong> Find the value of tan(60°).</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 8:</strong> Solve for x: cos(x) = 0.866</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 9:</strong> Calculate the value of sin(45°) × cos(45°).</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 10:</strong> Find the value of tan(30°).</p>
-    </div>
+
+    <!-- Questions Container -->
+    <div id="questions-container"></div>
+
+    <script>
+        // Questions for each difficulty level
+        const questions = {
+            gcse: [
+                { question: "Find the value of sin(30°).", answer: "0.5" },
+                { question: "Calculate the value of cos(60°).", answer: "0.5" },
+                { question: "What is the value of tan(45°)?", answer: "1" },
+                { question: "Solve for x: sin(x) = 0.5", answer: "30" },
+                { question: "Find the length of the side opposite the 30° angle in a right-angled triangle with hypotenuse 10 cm.", answer: "5" },
+                { question: "Calculate the value of sin²(30°) + cos²(30°).", answer: "1" },
+                { question: "Find the value of tan(60°).", answer: "1.732" },
+                { question: "Solve for x: cos(x) = 0.866", answer: "30" },
+                { question: "Calculate the value of sin(45°) × cos(45°).", answer: "0.5" },
+                { question: "Find the value of tan(30°).", answer: "0.577" }
+            ],
+            ks3: [
+                { question: "Find the value of sin(45°).", answer: "0.707" },
+                { question: "Calculate the value of cos(30°).", answer: "0.866" },
+                { question: "What is the value of tan(60°)?", answer: "1.732" },
+                { question: "Solve for x: sin(x) = 0.707", answer: "45" },
+                { question: "Find the length of the side opposite the 45° angle in a right-angled triangle with hypotenuse 10 cm.", answer: "7.07" },
+                { question: "Calculate the value of sin²(45°) + cos²(45°).", answer: "1" },
+                { question: "Find the value of tan(30°).", answer: "0.577" },
+                { question: "Solve for x: cos(x) = 0.5", answer: "60" },
+                { question: "Calculate the value of sin(30°) × cos(60°).", answer: "0.25" },
+                { question: "Find the value of tan(45°).", answer: "1" }
+            ],
+            ks2: [
+                { question: "Find the value of sin(0°).", answer: "0" },
+                { question: "Calculate the value of cos(90°).", answer: "0" },
+                { question: "What is the value of tan(0°)?", answer: "0" },
+                { question: "Solve for x: sin(x) = 0", answer: "0" },
+                { question: "Find the length of the side opposite the 30° angle in a right-angled triangle with hypotenuse 6 cm.", answer: "3" },
+                { question: "Calculate the value of sin²(0°) + cos²(0°).", answer: "1" },
+                { question: "Find the value of tan(90°).", answer: "Infinity" },
+                { question: "Solve for x: cos(x) = 1", answer: "0" },
+                { question: "Calculate the value of sin(90°) × cos(0°).", answer: "1" },
+                { question: "Find the value of tan(45°).", answer: "1" }
+            ]
+        };
+
+        // Function to display questions for a selected difficulty level
+        function showQuestions(difficulty) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = ''; // Clear previous questions
+
+            questions[difficulty].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                // Add question text
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                // Add input box for answer
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                // Add feedback element
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                // Append input and feedback to the question div
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+
+                // Append the question div to the container
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Function to check the answer
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
 </body>
 
 </html>

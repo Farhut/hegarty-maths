@@ -18,12 +18,53 @@
             color: #008CBA;
         }
 
+        .difficulty-buttons {
+            margin-bottom: 20px;
+        }
+
+        .difficulty-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .difficulty-button:hover {
+            background-color: #005f73;
+        }
+
         .question {
             margin-bottom: 20px;
             padding: 15px;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .question input {
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .question .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
         }
 
         .home-button, .back-button {
@@ -52,36 +93,104 @@
 
     <h1>Geometry Questions</h1>
 
-    <div class="question">
-        <p><strong>Question 1:</strong> Find the area of a circle with radius 5 cm.</p>
+    <!-- Difficulty Level Buttons -->
+    <div class="difficulty-buttons">
+        <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE High Maths Edexcel</button>
+        <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+        <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
     </div>
-    <div class="question">
-        <p><strong>Question 2:</strong> Calculate the perimeter of a rectangle with length 8 cm and width 5 cm.</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 3:</strong> What is the volume of a cube with side length 4 cm?</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 4:</strong> Find the missing angle in a triangle with angles 45° and 60°.</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 5:</strong> Calculate the circumference of a circle with diameter 10 cm.</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 6:</strong> Find the area of a triangle with base 6 cm and height 8 cm.</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 7:</strong> What is the surface area of a sphere with radius 3 cm?</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 8:</strong> Find the length of the hypotenuse in a right-angled triangle with sides 3 cm and 4 cm.</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 9:</strong> Calculate the area of a trapezoid with bases 5 cm and 7 cm, and height 4 cm.</p>
-    </div>
-    <div class="question">
-        <p><strong>Question 10:</strong> Find the volume of a cylinder with radius 2 cm and height 10 cm.</p>
-    </div>
+
+    <!-- Questions Container -->
+    <div id="questions-container"></div>
+
+    <script>
+        // Questions for each difficulty level
+        const questions = {
+            gcse: [
+                { question: "Find the area of a circle with radius 5 cm.", answer: "78.54" },
+                { question: "Calculate the perimeter of a rectangle with length 8 cm and width 5 cm.", answer: "26" },
+                { question: "What is the volume of a cube with side length 4 cm?", answer: "64" },
+                { question: "Find the missing angle in a triangle with angles 45° and 60°.", answer: "75" },
+                { question: "Calculate the circumference of a circle with diameter 10 cm.", answer: "31.42" },
+                { question: "Find the area of a triangle with base 6 cm and height 8 cm.", answer: "24" },
+                { question: "What is the surface area of a sphere with radius 3 cm?", answer: "113.10" },
+                { question: "Find the length of the hypotenuse in a right-angled triangle with sides 3 cm and 4 cm.", answer: "5" },
+                { question: "Calculate the area of a trapezoid with bases 5 cm and 7 cm, and height 4 cm.", answer: "24" },
+                { question: "Find the volume of a cylinder with radius 2 cm and height 10 cm.", answer: "125.66" }
+            ],
+            ks3: [
+                { question: "Find the area of a square with side length 5 cm.", answer: "25" },
+                { question: "Calculate the perimeter of a triangle with sides 3 cm, 4 cm, and 5 cm.", answer: "12" },
+                { question: "What is the volume of a cube with side length 3 cm?", answer: "27" },
+                { question: "Find the missing angle in a triangle with angles 50° and 60°.", answer: "70" },
+                { question: "Calculate the circumference of a circle with radius 4 cm.", answer: "25.13" },
+                { question: "Find the area of a rectangle with length 7 cm and width 3 cm.", answer: "21" },
+                { question: "What is the surface area of a cube with side length 2 cm?", answer: "24" },
+                { question: "Find the length of the hypotenuse in a right-angled triangle with sides 6 cm and 8 cm.", answer: "10" },
+                { question: "Calculate the area of a trapezoid with bases 4 cm and 6 cm, and height 5 cm.", answer: "25" },
+                { question: "Find the volume of a cylinder with radius 3 cm and height 7 cm.", answer: "197.92" }
+            ],
+            ks2: [
+                { question: "Find the area of a rectangle with length 5 cm and width 2 cm.", answer: "10" },
+                { question: "Calculate the perimeter of a square with side length 4 cm.", answer: "16" },
+                { question: "What is the volume of a cube with side length 2 cm?", answer: "8" },
+                { question: "Find the missing angle in a triangle with angles 30° and 60°.", answer: "90" },
+                { question: "Calculate the circumference of a circle with radius 3 cm.", answer: "18.85" },
+                { question: "Find the area of a triangle with base 4 cm and height 5 cm.", answer: "10" },
+                { question: "What is the surface area of a cube with side length 1 cm?", answer: "6" },
+                { question: "Find the length of the hypotenuse in a right-angled triangle with sides 5 cm and 12 cm.", answer: "13" },
+                { question: "Calculate the area of a trapezoid with bases 3 cm and 5 cm, and height 4 cm.", answer: "16" },
+                { question: "Find the volume of a cylinder with radius 1 cm and height 5 cm.", answer: "15.71" }
+            ]
+        };
+
+        // Function to display questions for a selected difficulty level
+        function showQuestions(difficulty) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = ''; // Clear previous questions
+
+            questions[difficulty].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                // Add question text
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                // Add input box for answer
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                // Add feedback element
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                // Append input and feedback to the question div
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+
+                // Append the question div to the container
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Function to check the answer
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
 </body>
 
 </html>

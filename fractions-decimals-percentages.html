@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="Farhan Ruhan">
-    <title>Statistics Lessons - Hegartymaths</title>
+    <title>Fractions, Decimals, and Percentages - Hegartymaths</title>
     <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
     <style>
         body {
@@ -88,10 +88,10 @@
 
 <body>
     <!-- Navigation Buttons -->
-    <button class="back-button" onclick="location.href='choose-lessons.html'">Back to Topics</button>
+    <button class="back-button" onclick="location.href='number-lessons.html'">Back to Number</button>
     <button class="home-button" onclick="location.href='index.html'">Home</button>
 
-    <h1>Statistics Questions</h1>
+    <h1>Fractions, Decimals, and Percentages</h1>
 
     <!-- Difficulty Level Buttons -->
     <div class="difficulty-buttons">
@@ -107,40 +107,40 @@
         // Questions for each difficulty level
         const questions = {
             gcse: [
-                { question: "Find the mean of the numbers: 5, 10, 15, 20, 25.", answer: "15" },
-                { question: "Calculate the median of the dataset: 3, 7, 9, 12, 15.", answer: "9" },
-                { question: "What is the mode of the dataset: 2, 4, 4, 6, 8, 8, 8?", answer: "8" },
-                { question: "Find the range of the dataset: 10, 20, 30, 40, 50.", answer: "40" },
-                { question: "Calculate the standard deviation of the dataset: 2, 4, 6, 8, 10.", answer: "2.83" },
-                { question: "What is the probability of rolling a 6 on a fair six-sided die?", answer: "0.1667" },
-                { question: "Find the interquartile range of the dataset: 1, 3, 5, 7, 9, 11, 13.", answer: "6" },
-                { question: "Calculate the variance of the dataset: 5, 10, 15, 20, 25.", answer: "62.5" },
-                { question: "What is the probability of drawing a red card from a standard deck of 52 cards?", answer: "0.5" },
-                { question: "Find the mean absolute deviation of the dataset: 2, 4, 6, 8, 10.", answer: "2.4" }
+                { question: "Convert 0.75 to a fraction.", answer: "3/4" },
+                { question: "Convert 2/5 to a decimal.", answer: "0.4" },
+                { question: "Convert 0.6 to a percentage.", answer: "60%" },
+                { question: "What is 25% of 80?", answer: "20" },
+                { question: "Simplify 12/18 to its lowest terms.", answer: "2/3" },
+                { question: "Convert 1.25 to a fraction.", answer: "5/4" },
+                { question: "Convert 3/8 to a decimal.", answer: "0.375" },
+                { question: "Convert 0.125 to a percentage.", answer: "12.5%" },
+                { question: "What is 10% of 150?", answer: "15" },
+                { question: "Simplify 16/24 to its lowest terms.", answer: "2/3" }
             ],
             ks3: [
-                { question: "Find the mean of the numbers: 2, 4, 6, 8, 10.", answer: "6" },
-                { question: "Calculate the median of the dataset: 1, 3, 5, 7, 9.", answer: "5" },
-                { question: "What is the mode of the dataset: 1, 2, 2, 3, 4, 4, 4?", answer: "4" },
-                { question: "Find the range of the dataset: 5, 10, 15, 20.", answer: "15" },
-                { question: "Calculate the standard deviation of the dataset: 1, 2, 3, 4, 5.", answer: "1.41" },
-                { question: "What is the probability of rolling an even number on a fair six-sided die?", answer: "0.5" },
-                { question: "Find the interquartile range of the dataset: 2, 4, 6, 8, 10.", answer: "4" },
-                { question: "Calculate the variance of the dataset: 1, 2, 3, 4, 5.", answer: "2" },
-                { question: "What is the probability of drawing a spade from a standard deck of 52 cards?", answer: "0.25" },
-                { question: "Find the mean absolute deviation of the dataset: 1, 2, 3, 4, 5.", answer: "1.2" }
+                { question: "Convert 0.5 to a fraction.", answer: "1/2" },
+                { question: "Convert 3/4 to a decimal.", answer: "0.75" },
+                { question: "Convert 0.25 to a percentage.", answer: "25%" },
+                { question: "What is 10% of 50?", answer: "5" },
+                { question: "Simplify 8/12 to its lowest terms.", answer: "2/3" },
+                { question: "Convert 0.8 to a fraction.", answer: "4/5" },
+                { question: "Convert 1/5 to a decimal.", answer: "0.2" },
+                { question: "Convert 0.1 to a percentage.", answer: "10%" },
+                { question: "What is 20% of 100?", answer: "20" },
+                { question: "Simplify 10/15 to its lowest terms.", answer: "2/3" }
             ],
             ks2: [
-                { question: "Find the mean of the numbers: 1, 2, 3, 4, 5.", answer: "3" },
-                { question: "Calculate the median of the dataset: 2, 4, 6.", answer: "4" },
-                { question: "What is the mode of the dataset: 1, 1, 2, 3, 3, 3?", answer: "3" },
-                { question: "Find the range of the dataset: 5, 10, 15.", answer: "10" },
-                { question: "Calculate the standard deviation of the dataset: 1, 2, 3.", answer: "0.82" },
-                { question: "What is the probability of rolling a 1 on a fair six-sided die?", answer: "0.1667" },
-                { question: "Find the interquartile range of the dataset: 1, 2, 3, 4, 5.", answer: "2" },
-                { question: "Calculate the variance of the dataset: 1, 2, 3.", answer: "0.67" },
-                { question: "What is the probability of drawing a heart from a standard deck of 52 cards?", answer: "0.25" },
-                { question: "Find the mean absolute deviation of the dataset: 1, 2, 3.", answer: "0.67" }
+                { question: "Convert 0.2 to a fraction.", answer: "1/5" },
+                { question: "Convert 1/2 to a decimal.", answer: "0.5" },
+                { question: "Convert 0.75 to a percentage.", answer: "75%" },
+                { question: "What is 5% of 100?", answer: "5" },
+                { question: "Simplify 6/9 to its lowest terms.", answer: "2/3" },
+                { question: "Convert 0.4 to a fraction.", answer: "2/5" },
+                { question: "Convert 1/4 to a decimal.", answer: "0.25" },
+                { question: "Convert 0.5 to a percentage.", answer: "50%" },
+                { question: "What is 10% of 200?", answer: "20" },
+                { question: "Simplify 4/8 to its lowest terms.", answer: "1/2" }
             ]
         };
 

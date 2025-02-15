@@ -1,0 +1,113 @@
+body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    h1 {
+        color: #2c3e50;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .difficulty-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+        justify-content: center;
+    }
+
+    .difficulty-button {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        color: white;
+        background-color: #3498db;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .difficulty-button:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+    }
+
+    .question {
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .question input {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .question .feedback {
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .correct {
+        color: #27ae60;
+    }
+
+    .incorrect {
+        color: #e74c3c;
+    }
+
+    .navigation-buttons {
+        display: flex;
+        gap: 10px; /* Adds 10px spacing between the buttons */
+        margin-bottom: 20px;
+    }
+
+    .home-button, .back-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: white;
+        background-color: #2ecc71;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .home-button:hover, .back-button:hover {
+        background-color: #27ae60;
+    }
+
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 2rem;
+        }
+
+        .difficulty-button {
+            width: 100%;
+            padding: 15px;
+        }
+
+        .question {
+            padding: 15px;
+        }
+    }

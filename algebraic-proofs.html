@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Algebraic Proofs - Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <!-- Navigation Buttons -->
+    <button class="back-button" onclick="location.href='algebra-lessons.html'">Back to Algebra</button>
+    <button class="home-button" onclick="location.href='index.html'">Home</button>
+
+    <h1>Algebraic Proofs</h1>
+
+    <!-- Difficulty Level Buttons -->
+    <div class="difficulty-buttons">
+        <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE High Maths Edexcel</button>
+        <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+        <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+    </div>
+
+    <!-- Questions Container -->
+    <div id="questions-container"></div>
+
+    <script>
+        const questions = {
+            gcse: [
+                { question: "Prove that the sum of two even numbers is even.", answer: "Let the numbers be 2a and 2b. Their sum is 2a + 2b = 2(a + b), which is even." },
+                { question: "Prove that the product of two odd numbers is odd.", answer: "Let the numbers be 2a + 1 and 2b + 1. Their product is (2a + 1)(2b + 1) = 4ab + 2a + 2b + 1 = 2(2ab + a + b) + 1, which is odd." },
+                { question: "Prove that the difference of two squares is equal to (a + b)(a - b).", answer: "a² - b² = (a + b)(a - b)." },
+                { question: "Prove that the sum of three consecutive integers is divisible by 3.", answer: "Let the integers be n, n + 1, n + 2. Their sum is 3n + 3 = 3(n + 1), which is divisible by 3." },
+                { question: "Prove that the square of an odd number is odd.", answer: "Let the number be 2a + 1. Its square is (2a + 1)² = 4a² + 4a + 1 = 2(2a² + 2a) + 1, which is odd." }
+            ],
+            ks3: [
+                { question: "Prove that the sum of two consecutive integers is odd.", answer: "Let the integers be n and n + 1. Their sum is 2n + 1, which is odd." },
+                { question: "Prove that the product of an even and an odd number is even.", answer: "Let the even number be 2a and the odd number be 2b + 1. Their product is 2a(2b + 1) = 4ab + 2a = 2(2ab + a), which is even." },
+                { question: "Prove that the square of an even number is even.", answer: "Let the number be 2a. Its square is (2a)² = 4a² = 2(2a²), which is even." },
+                { question: "Prove that the sum of two odd numbers is even.", answer: "Let the numbers be 2a + 1 and 2b + 1. Their sum is 2a + 1 + 2b + 1 = 2(a + b + 1), which is even." },
+                { question: "Prove that the difference of two even numbers is even.", answer: "Let the numbers be 2a and 2b. Their difference is 2a - 2b = 2(a - b), which is even." }
+            ],
+            ks2: [
+                { question: "Prove that the sum of two even numbers is even.", answer: "Let the numbers be 2a and 2b. Their sum is 2a + 2b = 2(a + b), which is even." },
+                { question: "Prove that the product of two even numbers is even.", answer: "Let the numbers be 2a and 2b. Their product is 2a * 2b = 4ab = 2(2ab), which is even." },
+                { question: "Prove that the sum of two odd numbers is even.", answer: "Let the numbers be 2a + 1 and 2b + 1. Their sum is 2a + 1 + 2b + 1 = 2(a + b + 1), which is even." },
+                { question: "Prove that the product of an even and an odd number is even.", answer: "Let the even number be 2a and the odd number be 2b + 1. Their product is 2a(2b + 1) = 4ab + 2a = 2(2ab + a), which is even." },
+                { question: "Prove that the square of an even number is even.", answer: "Let the number be 2a. Its square is (2a)² = 4a² = 2(2a²), which is even." }
+            ]
+        };
+
+        // Function to display questions for a selected difficulty level
+        function showQuestions(difficulty) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = ''; // Clear previous questions
+
+            questions[difficulty].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                // Add question text
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                // Add input box for answer
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                // Add feedback element
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                // Append input and feedback to the question div
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+
+                // Append the question div to the container
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Function to check the answer
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+</html>

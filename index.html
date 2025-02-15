@@ -8,80 +8,124 @@
     <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        .button {
-            border: none;
-            color: white;
-            padding: 25px 100px;
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1, h2 {
+            color: #333;
             text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            transition-duration: 0.4s;
-            cursor: pointer;
         }
 
-        .button1, .button2, .button3, .button4, .button5 {
-            background-color: white;
-            color: black;
-            width: 15%;
-            border: 2px solid #008CBA;
-            border-radius: 4px;
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
 
-        .button1:hover, .button2:hover, .button3:hover, .button4:hover, .button5:hover {
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: #666;
+        }
+
+        /* Logo */
+        .logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        /* Buttons */
+        .button {
             background-color: #008CBA;
             color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+            text-decoration: none;
+            width: 200px;
         }
 
-        .container {
-            height: 500px;
-            width: 1000px;
-            position: relative;
-            border: 3px solid #008CBA;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .button:hover {
+            background-color: #005f73;
+            transform: translateY(-2px);
         }
 
-        .skills-summary {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+        /* Chart Container */
+        .chart-container {
+            background-color: white;
+            border-radius: 10px;
             padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
         }
 
-        canvas {
-            width: 350px !important;
-            height: 350px !important;
-            transition: background-color 0.3s ease;
-        }
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
 
-        canvas:hover {
-            background-color: rgba(46, 204, 113, 0.1); /* Light green background on hover */
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .button {
+                width: 100%;
+                padding: 15px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <img src="Hegarty_Maths_logo_colour.png" alt="Hegarty logo" width="15%">
-    <button class="button button1" onclick="location.href='choose-lessons.html'">Choose Lesson</button>
-    <button class="button button2" onclick="location.href='search.html'">Search</button>
-    <button class="button button3" onclick="location.href='my-tasks.html'">My Tasks</button>
-    <button class="button button4" onclick="location.href='my-scores.html'">My Scores</button>
-    <button class="button button5" onclick="location.href='profile.html'">Profile</button>
-    <h1>Hi there Farhan,</h1>
-    <h2>Here is how you have been working on Hegarty maths this year!</h2>
+    <!-- Logo -->
+    <img src="Hegarty_Maths_logo_colour.png" alt="Hegarty logo" class="logo">
+
+    <!-- Welcome Message -->
+    <h1>Hi there, Farhan!</h1>
+    <h2>Here's how you've been working on Hegarty Maths this year.</h2>
     <h2>Remember to always work hard and never give up.</h2>
 
-    <div class="container">
+    <!-- Button Container -->
+    <div class="button-container">
+        <button class="button" onclick="location.href='choose-lessons.html'">Choose Lesson</button>
+        <button class="button" onclick="location.href='search.html'">Search</button>
+        <button class="button" onclick="location.href='my-tasks.html'">My Tasks</button>
+        <button class="button" onclick="location.href='my-scores.html'">My Scores</button>
+        <button class="button" onclick="location.href='profile.html'">Profile</button>
+    </div>
+
+    <!-- Chart Container -->
+    <div class="chart-container">
         <canvas id="skillChart"></canvas>
     </div>
 
     <script>
-        const ctx = document.getElementById('skillChart').getContext('2d');
-
         // Register a plugin to draw custom text in the center of the doughnut chart
         Chart.register({
             id: 'centerTextPlugin',
@@ -106,7 +150,9 @@
             }
         });
 
-        const chart = new Chart(ctx, {
+        // Doughnut Chart Configuration
+        const ctx = document.getElementById('skillChart').getContext('2d');
+        new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: ['Skills Mastered'],
@@ -118,8 +164,8 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true,
-                cutout: '40%', // Adjust this to control the width of the ring
+                maintainAspectRatio: false,
+                cutout: '50%', // Makes the ring wider
                 plugins: {
                     legend: {
                         display: false
@@ -129,24 +175,16 @@
                     },
                     centerText: {
                         text: '925 tasks', // Custom text
-                        color: '#000000', // Text color
+                        color: '#000000', // Text color (black)
                         fontStyle: 'bold', // Font style
-                        fontSize: 24 // Font size (make it bigger)
+                        fontSize: 24 // Font size
                     }
                 },
                 hover: {
                     mode: 'nearest',
                     intersect: true,
                     onHover: (event, chartElement) => {
-                        if (chartElement.length > 0) {
-                            event.target.style.cursor = 'pointer';
-                            chart.data.datasets[0].backgroundColor = ['#27ae60']; // Darker green on hover
-                            chart.update();
-                        } else {
-                            event.target.style.cursor = 'default';
-                            chart.data.datasets[0].backgroundColor = ['#2ecc71']; // Original green
-                            chart.update();
-                        }
+                        event.target.style.cursor = chartElement.length ? 'pointer' : 'default';
                     }
                 }
             }

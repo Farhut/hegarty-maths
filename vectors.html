@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Vectors - Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <!-- Navigation Buttons -->
+    <button class="back-button" onclick="location.href='algebra-lessons.html'">Back to Algebra</button>
+    <button class="home-button" onclick="location.href='index.html'">Home</button>
+
+    <h1>Vectors</h1>
+
+    <!-- Difficulty Level Buttons -->
+    <div class="difficulty-buttons">
+        <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE High Maths Edexcel</button>
+        <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+        <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+    </div>
+
+    <!-- Questions Container -->
+    <div id="questions-container"></div>
+
+    <script>
+        const questions = {
+            gcse: [
+                { question: "If vector a = (3, 4) and vector b = (1, 2), find a + b.", answer: "(4, 6)" },
+                { question: "If vector a = (2, 5) and vector b = (3, 1), find a - b.", answer: "(-1, 4)" },
+                { question: "If vector a = (4, 7), find 2a.", answer: "(8, 14)" },
+                { question: "If vector a = (1, 3) and vector b = (2, 4), find the magnitude of a + b.", answer: "5" },
+                { question: "If vector a = (5, 12), find the magnitude of a.", answer: "13" }
+            ],
+            ks3: [
+                { question: "If vector a = (2, 3) and vector b = (1, 1), find a + b.", answer: "(3, 4)" },
+                { question: "If vector a = (4, 2) and vector b = (3, 1), find a - b.", answer: "(1, 1)" },
+                { question: "If vector a = (3, 4), find 3a.", answer: "(9, 12)" },
+                { question: "If vector a = (1, 2) and vector b = (2, 3), find the magnitude of a + b.", answer: "5" },
+                { question: "If vector a = (3, 4), find the magnitude of a.", answer: "5" }
+            ],
+            ks2: [
+                { question: "If vector a = (1, 2) and vector b = (2, 3), find a + b.", answer: "(3, 5)" },
+                { question: "If vector a = (3, 1) and vector b = (2, 4), find a - b.", answer: "(1, -3)" },
+                { question: "If vector a = (2, 3), find 2a.", answer: "(4, 6)" },
+                { question: "If vector a = (1, 1) and vector b = (2, 2), find the magnitude of a + b.", answer: "3√2" },
+                { question: "If vector a = (3, 4), find the magnitude of a.", answer: "5" }
+            ]
+        };
+
+        // Function to display questions for a selected difficulty level
+        function showQuestions(difficulty) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = ''; // Clear previous questions
+
+            questions[difficulty].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                // Add question text
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                // Add input box for answer
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                // Add feedback element
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                // Append input and feedback to the question div
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+
+                // Append the question div to the container
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Function to check the answer
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+</html>

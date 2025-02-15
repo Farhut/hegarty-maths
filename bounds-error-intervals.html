@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Bounds and Error Intervals - Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="css.css">
+</head>
+
+<body>
+    <!-- Navigation Buttons -->
+    <button class="back-button" onclick="location.href='number-lessons.html'">Back to Number</button>
+    <button class="home-button" onclick="location.href='index.html'">Home</button>
+
+    <h1>Bounds and Error Intervals</h1>
+
+    <!-- Difficulty Level Buttons -->
+    <div class="difficulty-buttons">
+        <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE High Maths Edexcel</button>
+        <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+        <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+    </div>
+
+    <!-- Questions Container -->
+    <div id="questions-container"></div>
+
+    <script>
+        // Questions for each difficulty level
+        const questions = {
+            gcse: [
+                { question: "A number is rounded to 2.3. What is the lower bound?", answer: "2.25" },
+                { question: "A number is rounded to 5.6. What is the upper bound?", answer: "5.65" },
+                { question: "A number is rounded to 10.0. What is the error interval?", answer: "9.95 ≤ x < 10.05" },
+                { question: "A number is rounded to 3.14. What is the lower bound?", answer: "3.135" },
+                { question: "A number is rounded to 7.89. What is the upper bound?", answer: "7.895" },
+                { question: "A number is rounded to 12.5. What is the error interval?", answer: "12.45 ≤ x < 12.55" },
+                { question: "A number is rounded to 0.67. What is the lower bound?", answer: "0.665" },
+                { question: "A number is rounded to 9.99. What is the upper bound?", answer: "9.995" },
+                { question: "A number is rounded to 4.20. What is the error interval?", answer: "4.195 ≤ x < 4.205" },
+                { question: "A number is rounded to 6.00. What is the lower bound?", answer: "5.995" }
+            ],
+            ks3: [
+                { question: "A number is rounded to 1.2. What is the lower bound?", answer: "1.15" },
+                { question: "A number is rounded to 3.4. What is the upper bound?", answer: "3.45" },
+                { question: "A number is rounded to 7.0. What is the error interval?", answer: "6.95 ≤ x < 7.05" },
+                { question: "A number is rounded to 0.56. What is the lower bound?", answer: "0.555" },
+                { question: "A number is rounded to 8.91. What is the upper bound?", answer: "8.915" },
+                { question: "A number is rounded to 2.50. What is the error interval?", answer: "2.495 ≤ x < 2.505" },
+                { question: "A number is rounded to 0.12. What is the lower bound?", answer: "0.115" },
+                { question: "A number is rounded to 4.67. What is the upper bound?", answer: "4.675" },
+                { question: "A number is rounded to 5.00. What is the error interval?", answer: "4.995 ≤ x < 5.005" },
+                { question: "A number is rounded to 9.99. What is the lower bound?", answer: "9.985" }
+            ],
+            ks2: [
+                { question: "A number is rounded to 0.1. What is the lower bound?", answer: "0.05" },
+                { question: "A number is rounded to 0.2. What is the upper bound?", answer: "0.25" },
+                { question: "A number is rounded to 0.5. What is the error interval?", answer: "0.45 ≤ x < 0.55" },
+                { question: "A number is rounded to 0.01. What is the lower bound?", answer: "0.005" },
+                { question: "A number is rounded to 0.12. What is the upper bound?", answer: "0.125" },
+                { question: "A number is rounded to 0.50. What is the error interval?", answer: "0.495 ≤ x < 0.505" },
+                { question: "A number is rounded to 0.67. What is the lower bound?", answer: "0.665" },
+                { question: "A number is rounded to 0.89. What is the upper bound?", answer: "0.895" },
+                { question: "A number is rounded to 0.99. What is the error interval?", answer: "0.985 ≤ x < 0.995" },
+                { question: "A number is rounded to 1.00. What is the lower bound?", answer: "0.995" }
+            ]
+        };
+
+        // Function to display questions for a selected difficulty level
+        function showQuestions(difficulty) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = ''; // Clear previous questions
+
+            questions[difficulty].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                // Add question text
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                // Add input box for answer
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                // Add feedback element
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                // Append input and feedback to the question div
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+
+                // Append the question div to the container
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Function to check the answer
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+
+</html>

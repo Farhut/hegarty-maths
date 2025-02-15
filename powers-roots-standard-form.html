@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Powers, Roots, and Standard Form - Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="css.css">
+</head>
+
+<body>
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons">
+        <button class="back-button" onclick="location.href='number-lessons.html'">Back to Number</button>
+        <button class="home-button" onclick="location.href='index.html'">Home</button>
+    </div>
+
+    <h1>Powers, Roots, and Standard Form</h1>
+
+    <!-- Difficulty Level Buttons -->
+    <div class="difficulty-buttons">
+        <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE High Maths Edexcel</button>
+        <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+        <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+    </div>
+
+    <!-- Questions Container -->
+    <div id="questions-container"></div>
+
+    <script>
+        // Questions for each difficulty level
+        const questions = {
+            gcse: [
+                { question: "What is 2³?", answer: "8" },
+                { question: "Simplify √144.", answer: "12" },
+                { question: "Write 0.00045 in standard form.", answer: "4.5 × 10⁻⁴" },
+                { question: "What is 5²?", answer: "25" },
+                { question: "Simplify √64.", answer: "8" },
+                { question: "Write 6,700,000 in standard form.", answer: "6.7 × 10⁶" },
+                { question: "What is 10³?", answer: "1000" },
+                { question: "Simplify √25.", answer: "5" },
+                { question: "Write 0.0032 in standard form.", answer: "3.2 × 10⁻³" },
+                { question: "What is 3⁴?", answer: "81" }
+            ],
+            ks3: [
+                { question: "What is 3²?", answer: "9" },
+                { question: "Simplify √36.", answer: "6" },
+                { question: "Write 0.00078 in standard form.", answer: "7.8 × 10⁻⁴" },
+                { question: "What is 4³?", answer: "64" },
+                { question: "Simplify √81.", answer: "9" },
+                { question: "Write 5,000,000 in standard form.", answer: "5 × 10⁶" },
+                { question: "What is 2⁵?", answer: "32" },
+                { question: "Simplify √16.", answer: "4" },
+                { question: "Write 0.00012 in standard form.", answer: "1.2 × 10⁻⁴" },
+                { question: "What is 6²?", answer: "36" }
+            ],
+            ks2: [
+                { question: "What is 2²?", answer: "4" },
+                { question: "Simplify √9.", answer: "3" },
+                { question: "Write 0.00056 in standard form.", answer: "5.6 × 10⁻⁴" },
+                { question: "What is 3³?", answer: "27" },
+                { question: "Simplify √25.", answer: "5" },
+                { question: "Write 7,000,000 in standard form.", answer: "7 × 10⁶" },
+                { question: "What is 4²?", answer: "16" },
+                { question: "Simplify √4.", answer: "2" },
+                { question: "Write 0.00034 in standard form.", answer: "3.4 × 10⁻⁴" },
+                { question: "What is 5³?", answer: "125" }
+            ]
+        };
+
+        // Function to display questions for a selected difficulty level
+        function showQuestions(difficulty) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = ''; // Clear previous questions
+
+            questions[difficulty].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                // Add question text
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                // Add input box for answer
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                // Add feedback element
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                // Append input and feedback to the question div
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+
+                // Append the question div to the container
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Function to check the answer
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+
+</html>
