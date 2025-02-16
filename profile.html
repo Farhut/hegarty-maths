@@ -1,15 +1,128 @@
-<!-- profile.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+        h2 {
+            color: #0056b3;
+            margin-top: 20px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #profile-output {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        #profile-output p {
+            margin: 0 0 10px;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
     <script>
+        // Check if the user is logged in
+window.onload = function () {
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!loggedInUser) {
+        // Redirect to login page if not logged in
+        alert("Please log in to access your profile.");
+        window.location.href = "login.html";
+    } else {
+        // Load saved profile details
+        const savedProfile = JSON.parse(localStorage.getItem("profile"));
+        if (savedProfile) {
+            document.getElementById("name").value = savedProfile.name;
+            document.getElementById("email").value = savedProfile.email;
+            document.getElementById("dob").value = savedProfile.dob;
+            confirmDetails(); // Display saved details
+        }
+    }
+};
+        // Load saved profile details when the page loads
+        window.onload = function () {
+            const savedProfile = JSON.parse(localStorage.getItem("profile"));
+            if (savedProfile) {
+                document.getElementById("name").value = savedProfile.name;
+                document.getElementById("email").value = savedProfile.email;
+                document.getElementById("dob").value = savedProfile.dob;
+                confirmDetails(); // Display saved details
+            }
+        };
+
+        // Save and display profile details
         function confirmDetails() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const dob = document.getElementById('dob').value;
-            document.getElementById('profile-output').innerHTML = `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Date of Birth:</strong> ${dob}</p>`;
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const dob = document.getElementById("dob").value;
+
+            // Save details to localStorage
+            const profile = { name, email, dob };
+            localStorage.setItem("profile", JSON.stringify(profile));
+
+            // Display details
+            document.getElementById("profile-output").innerHTML = `
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Date of Birth:</strong> ${dob}</p>
+            `;
         }
     </script>
 </head>
@@ -18,15 +131,15 @@
     <p>Enter your details below:</p>
     <form>
         <label for="name">Name:</label>
-        <input type="text" id="name" placeholder="Enter your name"><br><br>
+        <input type="text" id="name" placeholder="Enter your name" required><br><br>
         
         <label for="email">Email:</label>
-        <input type="email" id="email" placeholder="Enter your email"><br><br>
+        <input type="email" id="email" placeholder="Enter your email" required><br><br>
         
         <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob"><br><br>
+        <input type="date" id="dob" required><br><br>
         
-        <button type="button" onclick="confirmDetails()">Confirm</button>
+        <button type="button" onclick="confirmDetails()">Save Details</button>
     </form>
     
     <h2>Your Details:</h2>

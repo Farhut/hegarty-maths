@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Outcomes - Probability and Sets</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #008CBA;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .difficulty-buttons {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .difficulty-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #2ecc71;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+
+        .difficulty-button:hover {
+            background-color: #27ae60;
+        }
+
+        .question-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-container input {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .back-button,
+        .home-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .back-button:hover,
+        .home-button:hover {
+            background-color: #005f73;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Buttons -->
+    <div style="text-align:center; margin-bottom: 20px;">
+        <button class="back-button" onclick="location.href='probability-sets-lessons.html'">Back to Probability and Sets Lessons</button>
+        <button class="home-button" onclick="location.href='index.html'">Go Home</button>
+    </div>
+
+    <h1>Outcomes</h1>
+
+    <div class="container">
+        <div class="difficulty-buttons">
+            <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE Higher Maths</button>
+            <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+            <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+        </div>
+
+        <div id="questions-container"></div>
+    </div>
+
+    <script>
+        const questions = {
+            gcse: [
+                { "question": "A fair coin is flipped 3 times. What is the total number of possible outcomes?", "answer": "8" },
+                { "question": "How many possible outcomes are there if two dice are rolled?", "answer": "36" },
+                { "question": "A deck of cards has 52 cards. How many outcomes are there when drawing one card?", "answer": "52" },
+                { "question": "If you flip a coin and roll a die, how many possible outcomes are there?", "answer": "12" }
+            ],
+            ks3: [
+                { "question": "A fair coin is flipped once. What are the possible outcomes?", "answer": "Heads or Tails" },
+                { "question": "A die is rolled. What are the possible outcomes?", "answer": "1, 2, 3, 4, 5, 6" },
+                { "question": "You draw a card from a deck of 52. What are the possible outcomes?", "answer": "52" },
+                { "question": "What are the possible outcomes when flipping a coin and rolling a die?", "answer": "6 outcomes for die, 2 outcomes for coin: 12 in total" }
+            ],
+            ks2: [
+                { "question": "If you roll a die, what are the possible outcomes?", "answer": "1, 2, 3, 4, 5, 6" },
+                { "question": "What are the possible outcomes if you flip a coin?", "answer": "Heads or Tails" },
+                { "question": "If you draw a marble from a bag with 4 red, 3 green, and 2 yellow marbles, what are the possible outcomes?", "answer": "Red, Green, Yellow" },
+                { "question": "If you flip a coin, what are the possible outcomes?", "answer": "Heads or Tails" }
+            ]
+        };
+
+        function showQuestions(level) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            questions[level].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+
+</html>

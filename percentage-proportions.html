@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Percentage Proportions - Ratio and Proportion - Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #008CBA;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #2ecc71;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .difficulty-button:hover {
+            background-color: #27ae60;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .question input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+            width: 50%;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .home-button, .back-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .home-button:hover, .back-button:hover {
+            background-color: #005f73;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Buttons -->
+    <div style="text-align:center; margin-bottom: 20px;">
+        <button class="back-button" onclick="location.href='ratio-proportion-Lessons.html'">Back to Ratio and Proportion</button>
+        <button class="home-button" onclick="location.href='index.html'">Home</button>
+    </div>
+
+    <h1>Percentage Proportions</h1>
+
+    <div class="container">
+        <div class="difficulty-buttons">
+            <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE Higher Maths Edexcel</button>
+            <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+            <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+        </div>
+        <div id="questions-container"></div>
+    </div>
+
+    <script>
+        const questions = {
+            gcse: [
+                { "question": "What is 25% of 200?", "answer": "50" },
+                { "question": "A product is discounted by 20%. If the original price is £50, what is the discount amount?", "answer": "10" },
+                { "question": "If 30% of a number is 60, what is the number?", "answer": "200" },
+                { "question": "A number is increased by 15%. If the original number is 200, what is the new number?", "answer": "230" }
+            ],
+            ks3: [
+                { "question": "What is 10% of 150?", "answer": "15" },
+                { "question": "A shirt costs £40. It is reduced by 25%. What is the new price?", "answer": "30" },
+                { "question": "If 50% of a number is 30, what is the number?", "answer": "60" },
+                { "question": "A number is decreased by 10%. If the original number is 100, what is the new number?", "answer": "90" }
+            ],
+            ks2: [
+                { "question": "What is 20% of 50?", "answer": "10" },
+                { "question": "A toy costs £10. It is reduced by 10%. What is the new price?", "answer": "9" },
+                { "question": "If 25% of a number is 8, what is the number?", "answer": "32" },
+                { "question": "A number is increased by 5%. If the original number is 50, what is the new number?", "answer": "52.5" }
+            ]
+        };
+
+        function showQuestions(level) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            questions[level].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+
+</html>

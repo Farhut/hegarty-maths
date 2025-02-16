@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Cumulative Frequency - Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        h1 {
+            color: #008CBA;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .difficulty-buttons {
+            margin-bottom: 20px;
+        }
+
+        .difficulty-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+
+        .difficulty-button:hover {
+            background-color: #005f73;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .question input {
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .home-button, .back-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #2ecc71;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+        }
+
+        .home-button:hover, .back-button:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="back-button" onclick="location.href='statistics-lessons.html'">Back to Statistics Lessons</button>
+    <button class="home-button" onclick="location.href='index.html'">Home</button>
+
+    <h1>Cumulative Frequency</h1>
+
+    <div class="container">
+        <div class="difficulty-buttons">
+            <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE Higher Maths Edexcel</button>
+            <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+            <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+        </div>
+        <div id="questions-container"></div>
+    </div>
+
+    <script>
+        const questions = {
+            gcse: [
+                { "question": "Plot a cumulative frequency graph for the following data: 3, 5, 6, 7, 8, 9.", "answer": "N/A" },
+                { "question": "How do you find the median from a cumulative frequency graph?", "answer": "The median is found where the cumulative frequency reaches half of the total frequency." }
+            ],
+            ks3: [
+                { "question": "What does a cumulative frequency graph show?", "answer": "A cumulative frequency graph shows the running total of frequencies up to each value." },
+                { "question": "How do you interpret the cumulative frequency graph?", "answer": "The slope of the graph shows how quickly the data accumulates." }
+            ],
+            ks2: [
+                { "question": "What does a cumulative frequency table show?", "answer": "A cumulative frequency table shows the total number of observations that are less than or equal to a certain value." },
+                { "question": "What is the advantage of using cumulative frequency?", "answer": "It helps to quickly find medians, quartiles, and other percentiles." }
+            ]
+        };
+
+        function showQuestions(level) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            questions[level].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+                
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+                
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+
+</html>

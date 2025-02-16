@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Pythagoras' Theorem - Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        h1 {
+            color: #008CBA;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .difficulty-buttons {
+            margin-bottom: 20px;
+        }
+
+        .difficulty-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+
+        .difficulty-button:hover {
+            background-color: #005f73;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .question input {
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .home-button, .back-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #2ecc71;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+        }
+
+        .home-button:hover, .back-button:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="back-button" onclick="location.href='choose-lessons.html'">Back to Topics</button>
+    <button class="home-button" onclick="location.href='index.html'">Home</button>
+
+    <h1>Pythagoras' Theorem</h1>
+    <div class="container">
+        <div class="difficulty-buttons">
+            <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE Higher Maths Edexcel</button>
+            <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+            <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+        </div>
+        <div id="questions-container"></div>
+    </div>
+
+    <script>
+        const questions = {
+            gcse: [
+                { "question": "Find the length of the hypotenuse of a right-angled triangle with sides of length 6 cm and 8 cm.", "answer": "10" },
+                { "question": "A right-angled triangle has a hypotenuse of 13 cm and one leg of 5 cm. Find the length of the other leg.", "answer": "12" },
+                { "question": "In a right-angled triangle, the legs are 7 cm and 24 cm. What is the length of the hypotenuse?", "answer": "25" },
+                { "question": "The hypotenuse of a right triangle is 15 cm, and one of the legs is 9 cm. What is the length of the other leg?", "answer": "12" }
+            ],
+            ks3: [
+                { "question": "A triangle has sides of length 3 cm, 4 cm, and 5 cm. Is this a right-angled triangle?", "answer": "Yes" },
+                { "question": "Find the missing side of a right-angled triangle where one leg is 8 cm and the hypotenuse is 10 cm.", "answer": "6" },
+                { "question": "A right-angled triangle has one side of length 5 cm and a hypotenuse of 13 cm. What is the length of the other side?", "answer": "12" },
+                { "question": "The sides of a triangle are 9 cm, 12 cm, and 15 cm. Is this a Pythagorean triple?", "answer": "Yes" }
+            ],
+            ks2: [
+                { "question": "What is the formula for finding the hypotenuse of a right-angled triangle?", "answer": "a² + b² = c²" },
+                { "question": "A right-angled triangle has a base of 3 cm and a height of 4 cm. What is the length of the hypotenuse?", "answer": "5" },
+                { "question": "If a triangle has sides of length 5 cm, 12 cm, and 13 cm, is it a right-angled triangle?", "answer": "Yes" },
+                { "question": "What do we call the longest side of a right-angled triangle?", "answer": "Hypotenuse" }
+            ]
+        };
+
+        function showQuestions(level) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            questions[level].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+                
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+                
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+
+</html>

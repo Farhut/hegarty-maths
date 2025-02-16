@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Proportions - Ratio and Proportion - Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #008CBA;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #2ecc71;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .difficulty-button:hover {
+            background-color: #27ae60;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .question input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+            width: 50%;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .home-button, .back-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .home-button:hover, .back-button:hover {
+            background-color: #005f73;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Buttons -->
+    <div style="text-align:center; margin-bottom: 20px;">
+        <button class="back-button" onclick="location.href='ratio-proportion-Lessons.html'">Back to Ratio and Proportion</button>
+        <button class="home-button" onclick="location.href='index.html'">Home</button>
+    </div>
+
+    <h1>Proportions</h1>
+
+    <div class="container">
+        <div class="difficulty-buttons">
+            <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE Higher Maths Edexcel</button>
+            <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+            <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+        </div>
+        <div id="questions-container"></div>
+    </div>
+
+    <script>
+        const questions = {
+            gcse: [
+                { "question": "If 4 is to 6 as x is to 18, find x.", "answer": "12" },
+                { "question": "In a proportion, if a : b = 3 : 5, find b when a = 18.", "answer": "30" },
+                { "question": "If 3x = 12, find x.", "answer": "4" },
+                { "question": "If 8 is to 16 as y is to 24, find y.", "answer": "12" }
+            ],
+            ks3: [
+                { "question": "If 5 is to 10 as x is to 20, find x.", "answer": "10" },
+                { "question": "If 2 is to 6 as y is to 18, find y.", "answer": "6" },
+                { "question": "If 7x = 49, find x.", "answer": "7" },
+                { "question": "If 4 is to 8 as z is to 16, find z.", "answer": "8" }
+            ],
+            ks2: [
+                { "question": "If 2 is to 4 as x is to 8, find x.", "answer": "4" },
+                { "question": "If 3 is to 6 as y is to 12, find y.", "answer": "6" },
+                { "question": "If 5x = 25, find x.", "answer": "5" },
+                { "question": "If 6 is to 12 as z is to 24, find z.", "answer": "12" }
+            ]
+        };
+
+        function showQuestions(level) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            questions[level].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+
+</html>

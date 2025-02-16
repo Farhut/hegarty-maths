@@ -1,18 +1,189 @@
-<!-- my-tasks.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>My Tasks</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .no-tasks {
+            color: #888;
+            font-style: italic;
+        }
+        .task-completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .add-task-form {
+            margin-bottom: 20px;
+        }
+        .add-task-form input {
+            margin-right: 10px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .add-task-form button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .add-task-form button:hover {
+            background-color: #005bb5;
+        }
+    </style>
 </head>
 <body>
     <h1>My Tasks</h1>
     <p>Here are your upcoming assignments:</p>
-    <ul>
-        <li>Complete Algebra Quiz - Due: Tomorrow</li>
-        <li>Watch Geometry Video - Due: Friday</li>
-        <li>Practice Trigonometry Problems - Due: Next Week</li>
-    </ul>
+
+    <!-- Add Task Form -->
+    <div class="add-task-form">
+        <input type="text" id="taskName" placeholder="Task Name" required>
+        <input type="text" id="dueDate" placeholder="Due Date" required>
+        <input type="text" id="setDate" placeholder="Set Date" required>
+        <input type="text" id="score" placeholder="Score" required>
+        <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <!-- Tasks Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Due Date</th>
+                <th>Set Date</th>
+                <th>Score</th>
+                <th>Completed</th>
+            </tr>
+        </thead>
+        <tbody id="taskTableBody">
+            <!-- Tasks will be dynamically added here -->
+        </tbody>
+    </table>
+
     <a href="index.html">Back to Home</a>
+
+    <script>
+        // Fetch tasks from the backend
+        async function fetchTasks() {
+            const response = await fetch("http://localhost:3000/tasks");
+            const data = await response.json();
+            const tasks = data.tasks;
+
+            const taskTableBody = document.getElementById("taskTableBody");
+            taskTableBody.innerHTML = ""; // Clear existing rows
+
+            tasks.forEach(task => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${task.task}</td>
+                    <td>${task.dueDate}</td>
+                    <td>${task.setDate}</td>
+                    <td>${task.score}</td>
+                    <td>
+                        <input type="checkbox" ${task.completed ? "checked" : ""} onchange="toggleTaskCompletion(this, ${task.id})">
+                    </td>
+                `;
+                if (task.completed) {
+                    row.classList.add("task-completed");
+                }
+                taskTableBody.appendChild(row);
+            });
+        }
+
+        // Add a new task
+        async function addTask() {
+            const taskName = document.getElementById("taskName").value;
+            const dueDate = document.getElementById("dueDate").value;
+            const setDate = document.getElementById("setDate").value;
+            const score = document.getElementById("score").value;
+
+            if (!taskName || !dueDate || !setDate || !score) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const response = await fetch("http://localhost:3000/tasks", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    task: taskName,
+                    dueDate: dueDate,
+                    setDate: setDate,
+                    score: score
+                })
+            });
+
+            if (response.ok) {
+                // Clear the form
+                document.getElementById("taskName").value = "";
+                document.getElementById("dueDate").value = "";
+                document.getElementById("setDate").value = "";
+                document.getElementById("score").value = "";
+
+                // Refresh the task list
+                fetchTasks();
+            } else {
+                alert("Failed to add task.");
+            }
+        }
+
+        // Mark a task as completed
+        async function toggleTaskCompletion(checkbox, taskId) {
+            const response = await fetch(`http://localhost:3000/tasks/${taskId}/complete`, {
+                method: "PUT"
+            });
+            if (response.ok) {
+                fetchTasks(); // Refresh the task list
+            }
+        }
+
+        // Load tasks when the page loads
+        fetchTasks();
+    </script>
 </body>
 </html>

@@ -12,6 +12,7 @@
             margin: 0;
             padding: 20px;
             background-color: #f4f4f4;
+            text-align: center;
         }
 
         h1 {
@@ -19,22 +20,25 @@
         }
 
         .topic-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            gap: 20px; /* Space between buttons */
+            margin-top: 20px;
+            justify-items: center;
         }
 
         .topic-button {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 12px 25px;
+            font-size: 18px;
             font-weight: bold;
             color: white;
             background-color: #2ecc71;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            width: 250px;
+            text-align: center;
         }
 
         .topic-button:hover {
@@ -42,16 +46,16 @@
         }
 
         .home-button, .back-button {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 12px 25px;
+            font-size: 18px;
             font-weight: bold;
             color: white;
             background-color: #008CBA;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-right: 10px;
+            margin: 10px;
         }
 
         .home-button:hover, .back-button:hover {

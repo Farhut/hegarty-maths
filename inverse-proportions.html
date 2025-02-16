@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Inverse Proportions - Ratio and Proportion - Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #008CBA;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #2ecc71;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .difficulty-button:hover {
+            background-color: #27ae60;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .question input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+            width: 50%;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .home-button, .back-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .home-button:hover, .back-button:hover {
+            background-color: #005f73;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Buttons -->
+    <div style="text-align:center; margin-bottom: 20px;">
+        <button class="back-button" onclick="location.href='ratio-proportion-Lessons.html'">Back to Ratio and Proportion</button>
+        <button class="home-button" onclick="location.href='index.html'">Home</button>
+    </div>
+
+    <h1>Inverse Proportions</h1>
+
+    <div class="container">
+        <div class="difficulty-buttons">
+            <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE Higher Maths Edexcel</button>
+            <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+            <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+        </div>
+        <div id="questions-container"></div>
+    </div>
+
+    <script>
+        const questions = {
+            gcse: [
+                { "question": "If y is inversely proportional to x and y = 8 when x = 4, find y when x = 2.", "answer": "16" },
+                { "question": "If the speed of a car is inversely proportional to the time taken, find the time taken when the speed is halved.", "answer": "Double" },
+                { "question": "If the pressure of a gas is inversely proportional to its volume, and the pressure is 3 when the volume is 5, find the pressure when the volume is 10.", "answer": "1.5" },
+                { "question": "If z is inversely proportional to the square of x and z = 9 when x = 3, find z when x = 6.", "answer": "2.25" }
+            ],
+            ks3: [
+                { "question": "If y is inversely proportional to x and y = 4 when x = 2, find y when x = 1.", "answer": "8" },
+                { "question": "If the distance traveled is inversely proportional to the speed, how does the time change when the speed is doubled?", "answer": "Halves" },
+                { "question": "If y is inversely proportional to x, and y = 6 when x = 3, find y when x = 6.", "answer": "3" },
+                { "question": "If z is inversely proportional to x, and z = 10 when x = 5, find z when x = 10.", "answer": "5" }
+            ],
+            ks2: [
+                { "question": "If y is inversely proportional to x and y = 2 when x = 4, find y when x = 2.", "answer": "4" },
+                { "question": "If the number of workers is inversely proportional to the time to complete a job, how does the time change when the number of workers is doubled?", "answer": "Halves" },
+                { "question": "If y is inversely proportional to x, and y = 12 when x = 3, find y when x = 6.", "answer": "6" },
+                { "question": "If y is inversely proportional to x, and y = 5 when x = 1, find y when x = 5.", "answer": "1" }
+            ]
+        };
+
+        function showQuestions(level) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            questions[level].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+
+</html>

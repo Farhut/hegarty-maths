@@ -1,18 +1,211 @@
-<!-- search.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Search</title>
+    <meta name="author" content="Farhan Ruhan">
+    <title>Search Lessons - Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #008CBA;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Search Container */
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Search Input */
+        .search-input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        /* Search Button */
+        .search-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-button:hover {
+            background-color: #005f73;
+        }
+
+        /* Search Results */
+        #search-results {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .result-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: #008CBA;
+            text-decoration: none;
+            display: block;
+        }
+
+        .result-item:hover {
+            background-color: #f9f9f9;
+            text-decoration: underline;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Back to Home Button */
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #005f73;
+        }
+    </style>
 </head>
+
 <body>
     <h1>Search Lessons</h1>
     <p>Find specific topics or lessons quickly.</p>
-    <input type="text" placeholder="Search...">
-    <button>Search</button>
-    <div id="search-results">
-        <p>No results yet.</p>
+
+    <!-- Search Container -->
+    <div class="search-container">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search...">
+        <button class="search-button" onclick="searchLessons()">Search</button>
     </div>
-    <a href="index.html">Back to Home</a>
+
+    <!-- Search Results -->
+    <div id="search-results">
+        <p>No results yet. Start typing to search.</p>
+    </div>
+
+    <!-- Back to Home Button -->
+    <a href="index.html" class="back-button">Back to Home</a>
+
+    <script>
+        // List of subtopics from the "Choose Lessons" area
+        const subtopics = [
+            "Expressions and Simplifying",
+            "Expanding and Factorising",
+            "Solving Equations",
+            "Inequalities",
+            "Sequences",
+            "Graphs",
+            "Algebraic Fractions",
+            "Functions",
+            "Vectors",
+            "Algebraic Proofs",
+            "Place Value and Rounding",
+            "Factors, Multiples, and Primes",
+            "Fractions, Decimals, and Percentages",
+            "Ratio and Proportion",
+            "Powers, Roots, and Standard Form",
+            "Surds",
+            "Bounds and Error Intervals",
+            "Direct and Inverse Proportion",
+            "Percentages (Increase, Decrease, Compound Interest)",
+            "Best Buys and Unit Pricing",
+            "Angles and Polygons",
+            "Properties of Shapes",
+            "Transformations",
+            "Pythagoras’ Theorem",
+            "Trigonometry",
+            "Circles",
+            "Volume and Surface Area of 3D Shapes",
+            "Constructions and Loci",
+            "Probability Basics",
+            "Mean, Median, Mode, and Range",
+            "Frequency Tables, Histograms, Box Plots",
+            "Scatter Graphs and Correlation"
+        ];
+
+        // Function to search lessons
+        function searchLessons() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const resultsContainer = document.getElementById('search-results');
+            resultsContainer.innerHTML = ''; // Clear previous results
+
+            if (searchTerm === '') {
+                resultsContainer.innerHTML = '<p>No results yet. Start typing to search.</p>';
+                return;
+            }
+
+            const filteredResults = subtopics.filter(subtopic =>
+                subtopic.toLowerCase().includes(searchTerm)
+            );
+
+            if (filteredResults.length === 0) {
+                resultsContainer.innerHTML = '<p>No results found.</p>';
+            } else {
+                filteredResults.forEach(result => {
+                    const resultItem = document.createElement('a');
+                    resultItem.className = 'result-item';
+                    resultItem.textContent = result;
+                    resultItem.href = `choose-lessons.html#${result.toLowerCase().replace(/ /g, '-')}`;
+                    resultsContainer.appendChild(resultItem);
+                });
+            }
+        }
+
+        // Allow pressing Enter to search
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchLessons();
+            }
+        });
+    </script>
 </body>
+
 </html>

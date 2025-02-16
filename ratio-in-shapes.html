@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Ratio in Shapes - Ratio and Proportion - Hegartymaths</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #008CBA;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #2ecc71;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .difficulty-button:hover {
+            background-color: #27ae60;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .question input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+            width: 50%;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .home-button, .back-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .home-button:hover, .back-button:hover {
+            background-color: #005f73;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Buttons -->
+    <div style="text-align:center; margin-bottom: 20px;">
+        <button class="back-button" onclick="location.href='ratio-proportion-Lessons.html'">Back to Ratio and Proportion</button>
+        <button class="home-button" onclick="location.href='index.html'">Home</button>
+    </div>
+
+    <h1>Ratio in Shapes</h1>
+
+    <div class="container">
+        <div class="difficulty-buttons">
+            <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE Higher Maths Edexcel</button>
+            <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+            <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+        </div>
+        <div id="questions-container"></div>
+    </div>
+
+    <script>
+        const questions = {
+            gcse: [
+                { "question": "The ratio of the length to the width of a rectangle is 5:3. If the length is 15 cm, find the width.", "answer": "9" },
+                { "question": "In a triangle, the ratio of the sides is 4:5:6. If the perimeter is 60 cm, find the length of the longest side.", "answer": "24" },
+                { "question": "The ratio of the radius to the diameter of a circle is 1:2. If the diameter is 14 cm, find the radius.", "answer": "7" },
+                { "question": "The ratio of the height to the base of a triangle is 3:4. If the height is 12 cm, find the base.", "answer": "16" }
+            ],
+            ks3: [
+                { "question": "The ratio of the length to the width of a rectangle is 2:3. If the length is 6 cm, find the width.", "answer": "9" },
+                { "question": "The ratio of the sides of a triangle is 3:4:5. If the perimeter is 24 cm, find the length of the smallest side.", "answer": "6" },
+                { "question": "The ratio of the radius to the diameter of a circle is 1:2. If the diameter is 10 cm, find the radius.", "answer": "5" },
+                { "question": "The ratio of the height to the base of a triangle is 2:3. If the height is 8 cm, find the base.", "answer": "12" }
+            ],
+            ks2: [
+                { "question": "The ratio of the length to the width of a rectangle is 3:2. If the length is 9 cm, find the width.", "answer": "6" },
+                { "question": "The ratio of the sides of a triangle is 2:3:4. If the perimeter is 18 cm, find the length of the largest side.", "answer": "8" },
+                { "question": "The ratio of the radius to the diameter of a circle is 1:2. If the diameter is 12 cm, find the radius.", "answer": "6" },
+                { "question": "The ratio of the height to the base of a triangle is 4:5. If the height is 16 cm, find the base.", "answer": "20" }
+            ]
+        };
+
+        function showQuestions(level) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            questions[level].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+
+</html>

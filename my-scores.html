@@ -1,31 +1,98 @@
-<!-- my-scores.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>My Scores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <h1>My Scores</h1>
     <p>Check your progress:</p>
-    <table border="1">
-        <tr>
-            <th>Lesson</th>
-            <th>Score</th>
-        </tr>
-        <tr>
-            <td>Algebra</td>
-            <td>85%</td>
-        </tr>
-        <tr>
-            <td>Geometry</td>
-            <td>92%</td>
-        </tr>
-        <tr>
-            <td>Trigonometry</td>
-            <td>78%</td>
-        </tr>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Lesson</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody id="scoresTableBody">
+            <!-- Scores will be dynamically added here -->
+        </tbody>
     </table>
+
     <a href="index.html">Back to Home</a>
+
+    <script>
+        // Fetch scores from the backend
+        async function fetchScores() {
+            const response = await fetch("http://localhost:3000/scores");
+            const data = await response.json();
+            const scores = data.scores;
+
+            const scoresTableBody = document.getElementById("scoresTableBody");
+            scoresTableBody.innerHTML = ""; // Clear existing rows
+
+            if (scores.length === 0) {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td colspan="2">No scores available. Complete some tasks to see your progress!</td>
+                `;
+                scoresTableBody.appendChild(row);
+            } else {
+                scores.forEach(score => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${score.task}</td>
+                        <td>${score.score}</td>
+                    `;
+                    scoresTableBody.appendChild(row);
+                });
+            }
+        }
+
+        // Load scores when the page loads
+        fetchScores();
+    </script>
 </body>
 </html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Farhan Ruhan">
+    <title>Conditional Probability - Probability and Sets</title>
+    <link rel="icon" href="hegarty_logo.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #008CBA;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .difficulty-buttons {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .difficulty-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #2ecc71;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+
+        .difficulty-button:hover {
+            background-color: #27ae60;
+        }
+
+        .question-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-container input {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .back-button,
+        .home-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .back-button:hover,
+        .home-button:hover {
+            background-color: #005f73;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Buttons -->
+    <div style="text-align:center; margin-bottom: 20px;">
+        <button class="back-button" onclick="location.href='probability-sets-lessons.html'">Back to Probability and Sets Lessons</button>
+        <button class="home-button" onclick="location.href='index.html'">Go Home</button>
+    </div>
+
+    <h1>Conditional Probability</h1>
+
+    <div class="container">
+        <div class="difficulty-buttons">
+            <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE Higher Maths</button>
+            <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
+            <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+        </div>
+
+        <div id="questions-container"></div>
+    </div>
+
+    <script>
+        const questions = {
+            gcse: [
+                { "question": "If the probability of raining is 0.6 and the probability of traffic given that it rains is 0.5, what is the probability of both raining and traffic?", "answer": "0.3" },
+                { "question": "A deck of cards contains 52 cards. If one card is drawn, what is the probability that the card is a heart given that it is a red card?", "answer": "0.5" },
+                { "question": "In a school, 60% of students play basketball and 50% of students play football. If a student is chosen at random, what is the probability that the student plays both basketball and football?", "answer": "0.3" },
+                { "question": "A bag contains 3 red balls, 2 blue balls, and 5 green balls. What is the probability of drawing a green ball, given that the ball drawn is not red?", "answer": "0.625" }
+            ],
+            ks3: [
+                { "question": "In a class of 30 students, 18 are girls and 12 are boys. If a student is selected at random, what is the probability that the student is a girl, given that they are under 16?", "answer": "0.6" },
+                { "question": "A box contains 4 green balls and 6 blue balls. If a blue ball is selected, what is the probability that the next ball is also blue?", "answer": "0.5" },
+                { "question": "In a survey, 8 out of 10 people prefer chocolate. What is the probability that a randomly chosen person likes chocolate, given that the person is a child?", "answer": "0.8" },
+                { "question": "A die is rolled. What is the probability of rolling a 6, given that the roll is an even number?", "answer": "0.5" }
+            ],
+            ks2: [
+                { "question": "There are 10 marbles in a bag. 7 are red and 3 are blue. What is the probability of drawing a red marble, given that it is not blue?", "answer": "1" },
+                { "question": "A box contains 3 green balls and 2 yellow balls. What is the probability of drawing a yellow ball, given that the first ball drawn was green?", "answer": "0" },
+                { "question": "In a bag with 4 apples and 3 bananas, what is the probability of drawing an apple, given that the fruit chosen is not a banana?", "answer": "1" },
+                { "question": "There are 5 red balls and 3 green balls. If a ball is chosen at random, what is the probability of choosing a green ball, given that the ball is not red?", "answer": "1" }
+            ]
+        };
+
+        function showQuestions(level) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            questions[level].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Your answer';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(input, q.answer, feedback);
+                    }
+                });
+
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedback);
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswer(input, correctAnswer, feedback) {
+            const userAnswer = input.value.trim();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+    </script>
+</body>
+
+</html>

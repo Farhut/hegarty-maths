@@ -12,72 +12,50 @@
             margin: 0;
             padding: 20px;
             background-color: #f4f4f4;
+            text-align: center;
         }
 
         h1 {
             color: #008CBA;
         }
 
-        .difficulty-buttons {
-            margin-bottom: 20px;
+        .topic-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            gap: 20px; /* Space between buttons */
+            margin-top: 20px;
+            justify-items: center;
         }
 
-        .difficulty-button {
-            padding: 10px 20px;
-            font-size: 16px;
+        .topic-button {
+            padding: 12px 25px;
+            font-size: 18px;
             font-weight: bold;
             color: white;
-            background-color: #008CBA;
+            background-color: #2ecc71;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-right: 10px;
+            width: 250px;
+            text-align: center;
         }
 
-        .difficulty-button:hover {
-            background-color: #005f73;
-        }
-
-        .question {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .question input {
-            padding: 5px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .question .feedback {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        .correct {
-            color: green;
-        }
-
-        .incorrect {
-            color: red;
+        .topic-button:hover {
+            background-color: #27ae60;
         }
 
         .home-button, .back-button {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 12px 25px;
+            font-size: 18px;
             font-weight: bold;
             color: white;
             background-color: #008CBA;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-right: 10px;
+            margin: 10px;
         }
 
         .home-button:hover, .back-button:hover {
@@ -91,106 +69,18 @@
     <button class="back-button" onclick="location.href='choose-lessons.html'">Back to Topics</button>
     <button class="home-button" onclick="location.href='index.html'">Home</button>
 
-    <h1>Statistics Questions</h1>
+    <h1>Statistics Lessons</h1>
 
-    <!-- Difficulty Level Buttons -->
-    <div class="difficulty-buttons">
-        <button class="difficulty-button" onclick="showQuestions('gcse')">GCSE High Maths Edexcel</button>
-        <button class="difficulty-button" onclick="showQuestions('ks3')">KS3 Level</button>
-        <button class="difficulty-button" onclick="showQuestions('ks2')">KS2 Level</button>
+    <!-- Topic Buttons -->
+    <div class="topic-buttons">
+        <button class="topic-button" onclick="location.href='mean-median-mode.html'">Mean, Median, Mode</button>
+        <button class="topic-button" onclick="location.href='range-and-interquartile.html'">Range & Interquartile Range</button>
+        <button class="topic-button" onclick="location.href='scatter-plots.html'">Scatter Plots</button>
+        <button class="topic-button" onclick="location.href='correlation.html'">Correlation</button>
+        <button class="topic-button" onclick="location.href='histograms.html'">Histograms</button>
+        <button class="topic-button" onclick="location.href='cumulative-frequency.html'">Cumulative Frequency</button>
+        <button class="topic-button" onclick="location.href='sampling.html'">Sampling</button>
     </div>
-
-    <!-- Questions Container -->
-    <div id="questions-container"></div>
-
-    <script>
-        // Questions for each difficulty level
-        const questions = {
-            gcse: [
-                { question: "Find the mean of the numbers: 5, 10, 15, 20, 25.", answer: "15" },
-                { question: "Calculate the median of the dataset: 3, 7, 9, 12, 15.", answer: "9" },
-                { question: "What is the mode of the dataset: 2, 4, 4, 6, 8, 8, 8?", answer: "8" },
-                { question: "Find the range of the dataset: 10, 20, 30, 40, 50.", answer: "40" },
-                { question: "Calculate the standard deviation of the dataset: 2, 4, 6, 8, 10.", answer: "2.83" },
-                { question: "What is the probability of rolling a 6 on a fair six-sided die?", answer: "0.1667" },
-                { question: "Find the interquartile range of the dataset: 1, 3, 5, 7, 9, 11, 13.", answer: "6" },
-                { question: "Calculate the variance of the dataset: 5, 10, 15, 20, 25.", answer: "62.5" },
-                { question: "What is the probability of drawing a red card from a standard deck of 52 cards?", answer: "0.5" },
-                { question: "Find the mean absolute deviation of the dataset: 2, 4, 6, 8, 10.", answer: "2.4" }
-            ],
-            ks3: [
-                { question: "Find the mean of the numbers: 2, 4, 6, 8, 10.", answer: "6" },
-                { question: "Calculate the median of the dataset: 1, 3, 5, 7, 9.", answer: "5" },
-                { question: "What is the mode of the dataset: 1, 2, 2, 3, 4, 4, 4?", answer: "4" },
-                { question: "Find the range of the dataset: 5, 10, 15, 20.", answer: "15" },
-                { question: "Calculate the standard deviation of the dataset: 1, 2, 3, 4, 5.", answer: "1.41" },
-                { question: "What is the probability of rolling an even number on a fair six-sided die?", answer: "0.5" },
-                { question: "Find the interquartile range of the dataset: 2, 4, 6, 8, 10.", answer: "4" },
-                { question: "Calculate the variance of the dataset: 1, 2, 3, 4, 5.", answer: "2" },
-                { question: "What is the probability of drawing a spade from a standard deck of 52 cards?", answer: "0.25" },
-                { question: "Find the mean absolute deviation of the dataset: 1, 2, 3, 4, 5.", answer: "1.2" }
-            ],
-            ks2: [
-                { question: "Find the mean of the numbers: 1, 2, 3, 4, 5.", answer: "3" },
-                { question: "Calculate the median of the dataset: 2, 4, 6.", answer: "4" },
-                { question: "What is the mode of the dataset: 1, 1, 2, 3, 3, 3?", answer: "3" },
-                { question: "Find the range of the dataset: 5, 10, 15.", answer: "10" },
-                { question: "Calculate the standard deviation of the dataset: 1, 2, 3.", answer: "0.82" },
-                { question: "What is the probability of rolling a 1 on a fair six-sided die?", answer: "0.1667" },
-                { question: "Find the interquartile range of the dataset: 1, 2, 3, 4, 5.", answer: "2" },
-                { question: "Calculate the variance of the dataset: 1, 2, 3.", answer: "0.67" },
-                { question: "What is the probability of drawing a heart from a standard deck of 52 cards?", answer: "0.25" },
-                { question: "Find the mean absolute deviation of the dataset: 1, 2, 3.", answer: "0.67" }
-            ]
-        };
-
-        // Function to display questions for a selected difficulty level
-        function showQuestions(difficulty) {
-            const container = document.getElementById('questions-container');
-            container.innerHTML = ''; // Clear previous questions
-
-            questions[difficulty].forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'question';
-
-                // Add question text
-                questionDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
-
-                // Add input box for answer
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.placeholder = 'Your answer';
-                input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        checkAnswer(input, q.answer, feedback);
-                    }
-                });
-
-                // Add feedback element
-                const feedback = document.createElement('div');
-                feedback.className = 'feedback';
-
-                // Append input and feedback to the question div
-                questionDiv.appendChild(input);
-                questionDiv.appendChild(feedback);
-
-                // Append the question div to the container
-                container.appendChild(questionDiv);
-            });
-        }
-
-        // Function to check the answer
-        function checkAnswer(input, correctAnswer, feedback) {
-            const userAnswer = input.value.trim();
-            if (userAnswer === correctAnswer) {
-                feedback.textContent = 'Correct!';
-                feedback.className = 'feedback correct';
-            } else {
-                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
-                feedback.className = 'feedback incorrect';
-            }
-        }
-    </script>
 </body>
 
 </html>
